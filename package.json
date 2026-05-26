@@ -9,9 +9,17 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "next": "16.2.6",
+    "axios": "^1.16.1",
+    "bcryptjs": "^3.0.3",
+    "mercadopago": "^0.5.0",
+    "mongoose": "^9.6.2",
+    "next": "^9.3.3",
+    "next-auth": "^3.29.10",
+    "nodemailer": "^8.0.9",
+    "papaparse": "^5.5.3",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

@@ -24,5 +24,25 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
+  );import { Inter } from "next/font/google";
+import "./globals.css";
+import { CartProvider } from "@/components/CartContext";
+import Navbar from "@/components/Navbar"; // Asumiremos que creaste este componente básico
+
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata = { title: "R.A.P.E.L Distribuidora", description: "Repuestos y Aceites" };
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="es">
+      <body className={inter.className}>
+        <CartProvider>
+          <Navbar /> {/* Asegúrate de crear un Navbar simple que muestre el ícono del carrito */}
+          <main>{children}</main>
+        </CartProvider>
+      </body>
+    </html>
   );
+}
 }
