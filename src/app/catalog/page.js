@@ -24,8 +24,35 @@ export default function CatalogPage() {
     (cat === 'all' || p.category === cat) && 
     (p.name.toLowerCase().includes(search.toLowerCase()) || p.sku.toLowerCase().includes(search.toLowerCase()))
   );
-
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Catálogo</h1>
-     
+
+      <div className="mb-4 flex gap-4">
+        <input
+          type="text"
+          placeholder="Buscar por nombre o SKU"
+          className="border rounded px-3 py-2 flex-1"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
+        <select value={cat} onChange={e => setCat(e.target.value)} className="border rounded px-3 py-2">
+          <option value="all">Todas</option>
+          <option value="aceites">Aceites</option>
+          <option value="neumaticos">Neumáticos</option>
+          <option value="repuestos">Repuestos</option>
+        </select>
+      </div>
+
+      {loading ? (
+        <p>Cargando...</p>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {filtered.map(p => (
+            <ProductCard key={p._id} product={p} />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}

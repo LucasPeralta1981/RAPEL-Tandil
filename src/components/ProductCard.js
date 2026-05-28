@@ -1,31 +1,74 @@
+// src/components/ProductCard.js
 'use client';
-import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+import StatusBadge from './StatusBadge';
 
 export default function ProductCard({ product }) {
-  const { data: session } = useSession();
-  const isB2B = session?.user?.role === 'b2b';
-
-  const handleAction = () => {
-    if (!session) { alert("Inicia sesión para comprar"); return; }
-    alert(isB2B ? `Solicitar presupuesto: ${product.name}` : `Agregar al carrito: ${product.name}`);
-  };
-
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 flex flex-col">
-      <div className="relative h-48 bg-gray-100">
-        <img src={product.imageUrl || 'https://via.placeholder.com/300?text=R.A.P.E.L'} alt={product.name} className="w-full h-full object-cover" />
-      </div>
-      <div className="p-5 flex flex-col flex-grow">
-        <p className="text-xs text-gray-500 uppercase mb-1">{product.category}</p>
-        <h3 className="text-lg font-bold text-gray-800 mb-2">{product.name}</h3>
-        <p className="text-xs text-gray-400 mb-3">SKU: {product.sku}</p>
-        <div className="mt-auto">
-          <span className="text-2xl font-extrabold text-blue-700">${product.finalPrice.toLocaleString('es-AR')}</span>
-          {product.stock > 0 ? (
-            <button onClick={handleAction} className={`w-full mt-4 py-2 rounded font-bold text-white ${isB2B ? 'bg-purple-600' : 'bg-green-600'}`}>
-              {isB2B ? '📋 Cotizar' : '🛒 Comprar'}
+    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+      <div className="relative">
+        {/* Imagen del producto */}
+        <img
+          src={product.image || 'https://via.placeholder.com/300x200'}
+          alt={product.name}
+          className="w-full h-48 object-cover"
+        />
+        
+        {/* Indicador de AGOTADO */}
+        {product.quantity === 0 && (
+          <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
+            AGOTADO
+          </div>
+        )}
+        
+        {/* Indicador de POCAS UNIDADES */}
+        {product.quantity < 10 && product.quantity > 0 && (
+          <div className="absolute top-2 right-2 bg-yellow-500 text-white px-2 py-1 rounded text-xs font-bold">
+            POCAS UNIDADES
+          </div>
+        )}
+      </div> {/* ✅ CIERRE CORRECTO del div "relative" */}
+      
+      {/* Contenido del producto */}
+      <div className="p-4">
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">{product.name}</h3>
+        
+        <div className="flex items-center justify-between mb-2">
+          <StatusBadge 
+            status={product.quantity} 
+            type="product" 
+          />
+          
+          <p className="text-xl font-bold text-blue-600">
+            ${product.price.toLocaleString('es-AR')}
+          </p>
+        </div>
+        
+        {product.description && (
+          <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+            {product.description}
+          </p>
+        )}
+        
+        <div className="flex gap-2">
+          <Link
+            href={`/products/${product.slug}`}
+            className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition text-center"
+          >
+            Ver detalles
+          </Link>
+          
+          {product.quantity > 0 && (
+            <button
+              onClick={() => {
+                // Aquí iría la lógica para agregar al carrito
+                console.log('Agregar al carrito:', product.name);
+              }}
+              className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
+            >
+              + Agregar
             </button>
-          ) : <button disabled className="w-full mt-4 py-2 bg-gray-300 text-gray-500 rounded">Agotado</button>}
+          )}
         </div>
       </div>
     </div>

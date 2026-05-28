@@ -1,3 +1,10 @@
+// ✅ CORRECTO (Usa el alias @)
+import Product from '@/models/Product';
+import Order from '@/models/Order';
+import User from '@/models/User';
+
+// ... resto de tu código ...
+
 import { NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import Product from '@/models/Product';
