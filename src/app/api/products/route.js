@@ -8,18 +8,13 @@ export async function GET() {
   try {
     await connectDB();
 
-    const products =
-      await Product.find();
+    const products = await Product.find();
 
     return NextResponse.json(products);
   } catch (error) {
     return NextResponse.json(
-      {
-        error: error.message,
-      },
-      {
-        status: 500,
-      }
+      { error: error.message },
+      { status: 500 }
     );
   }
 }

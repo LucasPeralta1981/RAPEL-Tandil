@@ -4,12 +4,9 @@ const ProductSchema = new mongoose.Schema({
   name: String,
 
   price: Number,
-
+  
   stock: Number,
 });
 
 export default mongoose.models.Product ||
-  mongoose.model(
-    'Product',
-    ProductSchema
-  );
+  mongoose.model('Product', ProductSchema);
