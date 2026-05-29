@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import ProductCard from '@/components/ProductCard';
+import ProductCard from '@/components/ProductCard'; // ✅ CAMBIO AQUÍ
 import { useSession } from 'next-auth/react';
 
 export default function CatalogPage() {
@@ -24,6 +24,7 @@ export default function CatalogPage() {
     (cat === 'all' || p.category === cat) && 
     (p.name.toLowerCase().includes(search.toLowerCase()) || p.sku.toLowerCase().includes(search.toLowerCase()))
   );
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Catálogo</h1>

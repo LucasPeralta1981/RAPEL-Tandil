@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const connectDB = require('../src/lib/db');
-const User = require('../src/models/User');
+const User = require('../src/models/Users');
 const Product = require('../src/models/Product');
 const Order = require('../src/models/Order');
 
