@@ -30,6 +30,6 @@ imageUrl:
 ]);
 console.log('Seed completa');
 process.exit();
-18
+
 }
 seed();
