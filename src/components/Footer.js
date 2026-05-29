@@ -1,7 +1,14 @@
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-white text-center p-6 mt-12">
+    <footer
+      style={{
+        background: '#111',
+        color: 'white',
+        padding: '20px',
+        marginTop: '40px',
+      }}
+    >
       © 2026 R.A.P.E.L
     </footer>
- );
+  );
 }
