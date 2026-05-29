@@ -1,59 +1,26 @@
 'use client';
-import { useState, useEffect } from 'react';
-import ProductCard from '@/components/ProductCard'; // ✅ CAMBIO AQUÍ
-import { useSession } from 'next-auth/react';
-
-export default function CatalogPage() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
-  const [cat, setCat] = useState('all');
-
-  useEffect(() => {
-    // Simulación de datos (reemplazar con fetch real a API)
-    const mock = [
-      { _id: '1', sku: 'SH-5W30', name: 'Aceite Shell 5W30', category: 'aceites', finalPrice: 15000, stock: 100, imageUrl: 'https://via.placeholder.com/300' },
-      { _id: '2', sku: 'NEUM-195', name: 'Neumático Michelin', category: 'neumaticos', finalPrice: 45000, stock: 10, imageUrl: 'https://via.placeholder.com/300' },
-      { _id: '3', sku: 'REP-FRE', name: 'Pastillas Freno', category: 'repuestos', finalPrice: 8500, stock: 50, imageUrl: 'https://via.placeholder.com/300' },
-    ];
-    setProducts(mock);
-    setLoading(false);
-  }, []);
-
-  const filtered = products.filter(p => 
-    (cat === 'all' || p.category === cat) && 
-    (p.name.toLowerCase().includes(search.toLowerCase()) || p.sku.toLowerCase().includes(search.toLowerCase()))
-  );
-
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Catálogo</h1>
-
-      <div className="mb-4 flex gap-4">
-        <input
-          type="text"
-          placeholder="Buscar por nombre o SKU"
-          className="border rounded px-3 py-2 flex-1"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-        />
-        <select value={cat} onChange={e => setCat(e.target.value)} className="border rounded px-3 py-2">
-          <option value="all">Todas</option>
-          <option value="aceites">Aceites</option>
-          <option value="neumaticos">Neumáticos</option>
-          <option value="repuestos">Repuestos</option>
-        </select>
-      </div>
-
-      {loading ? (
-        <p>Cargando...</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {filtered.map(p => (
-            <ProductCard key={p._id} product={p} />
-          ))}
-        </div>
-      )}
-    </div>
-  )
+import { useEffect, useState } from 'react';
+import ProductCard from '@/components/ProductCard';
+export default function ProductosPage() {
+const [products, setProducts] = useState([]);
+useEffect(() => {
+fetch('/api/products')
+.then((res) => res.json())
+.then((data) => setProducts(data));
+}, []);
+return (
+<div className="p-8">
+<h1 className="text-4xl font-bold mb-8">
+Productos
+</h1>
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+{products.map((product) => (
+<ProductCard
+key={product._id}
+product={product}
+/>
+))}
+</div>
+</div>
+);
 }
