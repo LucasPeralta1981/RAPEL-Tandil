@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import ProductCard from '@/components/ProductCard';
+import ProductCard from '../../Footer/components/ProductCard';
 export default function ProductosPage() {
 const [products, setProducts] = useState([]);
 useEffect(() => {
